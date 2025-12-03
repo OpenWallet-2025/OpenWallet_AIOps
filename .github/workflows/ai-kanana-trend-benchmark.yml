@@ -7,7 +7,7 @@ on:
       - "benchmarks/run_kanana_trend_bench.py"
       - ".github/workflows/ai-kanana-trend-benchmark.yml"
   schedule:
-    - cron: "*/10 * * * *"  
+    - cron: "*/10 * * * *"  # 10분마다 실행
   workflow_dispatch:
 
 permissions:
@@ -34,13 +34,19 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.10.8"
           cache: "pip"
 
-      - name: Install dependencies from OpenWallet_AI
+      # fix: GPU 에러 수정 CPU 전용 torch만 설치
+      - name: Install PyTorch CPU version first
         run: |
           python -m pip install --upgrade pip
-          pip install -r OpenWallet_AI/requirements.txt
+          pip install torch==2.3.1+cpu torchvision==0.18.1+cpu --index-url https://download.pytorch.org/whl/cpu
+
+      # CUDA 패키지 안 끌려오게 CPU 인덱스 추가하는 방법이 있네요. 신기합니다.
+      - name: Install dependencies from OpenWallet_AI
+        run: |
+          pip install --no-cache-dir -r OpenWallet_AI/requirements.txt --extra-index-url https://download.pytorch.org/whl/cpu
 
       - name: Run Kanana trend benchmark
         env:

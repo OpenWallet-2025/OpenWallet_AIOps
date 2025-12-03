@@ -7,7 +7,7 @@ on:
       - "benchmarks/run_kanana_trend_bench.py"
       - ".github/workflows/ai-kanana-trend-benchmark.yml"
   schedule:
-     - cron: "*/10 * * * *"  # 10분마다 실행
+    - cron: "*/10 * * * *" # 10분마다 실행
   workflow_dispatch:
 
 permissions:

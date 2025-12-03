@@ -6,7 +6,7 @@ on:
     paths:
       - "benchmarks/run_kanana_trend_bench.py"
       - ".github/workflows/ai-kanana-trend-benchmark.yml"
-  schedule:
+  # schedule:
     # - cron: "*/10 * * * *"  # 10분마다 실행
   workflow_dispatch:
 

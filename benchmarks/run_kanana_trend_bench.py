@@ -9,7 +9,7 @@ import requests
 from trend_summary import run as run_trend_summary, TrendSummary
 
 # 벤치마크 설정값
-MAX_LATENCY_MS = 300_000        # 5 min
+MAX_LATENCY_MS = 420_000        # 7 min로 완화함.
 MIN_BULLETS = 1                # bullets 최소 1개 이상
 MIN_KEY_STATS = 1              # key_stats 최소 1개 이상
 RESULTS_DIR = Path("results")

@@ -1,0 +1,56 @@
+name: ai-kanana-trend-benchmark
+
+on:
+  push:
+    branches: [develop, main]
+    paths:
+      - "benchmarks/run_kanana_trend_bench.py"
+      - ".github/workflows/ai-kanana-trend-benchmark.yml"
+  schedule:
+    - cron: "*/10 * * * *"  
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  kanana-trend-bench:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout OpenWallet_AIOps repo
+        uses: actions/checkout@v4
+
+      - name: Checkout OpenWallet_AI repo (develop)
+        uses: actions/checkout@v4
+        with:
+          repository: OpenWallet-2025/OpenWallet_AI
+          ref: develop
+          path: OpenWallet_AI
+
+      - name: Set PYTHONPATH to include OpenWallet_AI
+        run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)/OpenWallet_AI" >> $GITHUB_ENV
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: Install dependencies from OpenWallet_AI
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r OpenWallet_AI/requirements.txt
+
+      - name: Run Kanana trend benchmark
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          python benchmarks/run_kanana_trend_bench.py
+
+      - name: Upload benchmark results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kanana-trend-bench-json
+          path: results/kanana_trend_bench.json

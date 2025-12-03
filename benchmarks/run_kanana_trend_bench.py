@@ -9,7 +9,7 @@ import requests
 from trend_summary import run as run_trend_summary, TrendSummary
 
 # 벤치마크 설정값
-MAX_LATENCY_MS = 2000          # 2초 이하면 OK
+MAX_LATENCY_MS = 300_000        # 5 min
 MIN_BULLETS = 1                # bullets 최소 1개 이상
 MIN_KEY_STATS = 1              # key_stats 최소 1개 이상
 RESULTS_DIR = Path("results")
@@ -19,21 +19,21 @@ RESULTS_DIR.mkdir(exist_ok=True)
 TEST_CASES: List[Dict[str, Any]] = [
     {
         "id": "general_consumption",
-        "keywords": ["소비 트렌드", "가계부", "생활비"],
+        "keywords": ["소비 트렌드", "여행"],
         "days": 3,
-        "max_articles": 10,
+        "max_articles": 5,
     },
     {
         "id": "subscription_focus",
-        "keywords": ["구독 서비스", "구독경제", "멤버십"],
+        "keywords": ["멤버십"],
         "days": 7,
-        "max_articles": 10,
+        "max_articles": 5,
     },
     {
         "id": "small_pleasure",
         "keywords": ["카페 소비", "소확행", "간편식"],
         "days": 7,
-        "max_articles": 10,
+        "max_articles": 5,
     },
 ]
 

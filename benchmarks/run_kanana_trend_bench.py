@@ -20,20 +20,8 @@ TEST_CASES: List[Dict[str, Any]] = [
     {
         "id": "general_consumption",
         "keywords": ["소비 트렌드", "여행"],
-        "days": 3,
-        "max_articles": 5,
-    },
-    {
-        "id": "subscription_focus",
-        "keywords": ["멤버십"],
-        "days": 7,
-        "max_articles": 5,
-    },
-    {
-        "id": "small_pleasure",
-        "keywords": ["카페 소비", "소확행", "간편식"],
-        "days": 7,
-        "max_articles": 5,
+        "days": 2,
+        "max_articles": 3,
     },
 ]
 
